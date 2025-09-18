@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Fake Profile Detect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>Fake Profile Detect</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#detect">Detect</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="admin.html#admin" class="active">Admin Panel</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-dropdown">
+                    <span id="username">User</span>
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="dropdown-content">
+                        <a href="#"><i class="fas fa-user"></i> Profile</a>
+                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="active" data-section="overview-section"><a href="#"><i class="fas fa-home"></i> Overview</a></li>
+                <li data-section="scan-history-section"><a href="#"><i class="fas fa-search"></i> Scan History</a></li>
+                <li data-section="analytics-section"><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li data-section="reports-section"><a href="#"><i class="fas fa-flag"></i> Reports</a></li>
+                <li data-section="settings-section"><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Overview Section -->
+            <section id="overview-section" class="dashboard-section active">
+                <div class="dashboard-header">
+                    <h1>Dashboard Overview</h1>
+                    <a href="index.html#detect" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> New Scan
+                    </a>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>24</h3>
+                            <p>Total Scans</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-times"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>16</h3>
+                            <p>Fake Profiles</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>8</h3>
+                            <p>Genuine Profiles</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>5</h3>
+                            <p>Reports Filed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <h3>Profile Analysis Results</h3>
+                        <canvas id="resultsChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>Platform Distribution</h3>
+                        <canvas id="platformsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="recent-scans">
+                    <h3>Recent Scans</h3>
+                    <div class="scans-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Profile URL</th>
+                                    <th>Platform</th>
+                                    <th>Date</th>
+                                    <th>Result</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>https://instagram.com/john.doe</td>
+                                    <td><i class="fab fa-instagram"></i> Instagram</td>
+                                    <td>Oct 15, 2025</td>
+                                    <td><span class="badge badge-fake">Fake</span></td>
+                                    <td>
+                                        <button class="icon-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn"><i class="fas fa-download"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>https://instagram.com/jane_smith</td>
+                                    <td><i class="fab fa-instagram"></i> Instagram</td>
+                                    <td>Oct 14, 2025</td>
+                                    <td><span class="badge badge-genuine">Genuine</span></td>
+                                    <td>
+                                        <button class="icon-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn"><i class="fas fa-download"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>https://facebook.com/robert_jones</td>
+                                    <td><i class="fab fa-facebook"></i> Facebook</td>
+                                    <td>Oct 13, 2025</td>
+                                    <td><span class="badge badge-fake">Fake</span></td>
+                                    <td>
+                                        <button class="icon-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn"><i class="fas fa-download"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>https://tiktok.com/@sarah_miller</td>
+                                    <td><i class="fab fa-tiktok"></i> TikTok</td>
+                                    <td>Oct 12, 2025</td>
+                                    <td><span class="badge badge-suspicious">Suspicious</span></td>
+                                    <td>
+                                        <button class="icon-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn"><i class="fas fa-download"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scan History Section -->
+            <section id="scan-history-section" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>Scan History</h1>
+                    <button class="btn btn-primary" id="export-history-btn">
+                        <i class="fas fa-download"></i> Export History
+                    </button>
+                </div>
+                
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="platform-filter">Platform:</label>
+                        <select id="platform-filter">
+                            <option value="all">All Platforms</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="twitter">Twitter</option>
+                            <option value="tiktok">TikTok</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="result-filter">Result:</label>
+                        <select id="result-filter">
+                            <option value="all">All Results</option>
+                            <option value="fake">Fake</option>
+                            <option value="genuine">Genuine</option>
+                            <option value="suspicious">Suspicious</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="date-filter">Date Range:</label>
+                        <select id="date-filter">
+                            <option value="all">All Time</option>
+                            <option value="week">Last 7 Days</option>
+                            <option value="month">Last 30 Days</option>
+                            <option value="quarter">Last 3 Months</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-secondary" id="apply-filters-btn">Apply Filters</button>
+                </div>
+                
+                <div class="scans-table-full">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Profile URL</th>
+                                <th>Platform</th>
+                                <th>Date</th>
+                                <th>Result</th>
+                                <th>Confidence</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scan-history-body">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination-controls">
+                    <button class="btn btn-secondary" id="prev-page-btn" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <span class="page-info">Page 1 of 3</span>
+                    <button class="btn btn-secondary" id="next-page-btn">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics-section" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>Analytics</h1>
+                    <div class="date-range-selector">
+                        <label for="analytics-date-range">Date Range:</label>
+                        <select id="analytics-date-range">
+                            <option value="week">Last 7 Days</option>
+                            <option value="month" selected>Last 30 Days</option>
+                            <option value="quarter">Last 3 Months</option>
+                            <option value="year">Last 12 Months</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="analytics-cards">
+                    <div class="analytics-card">
+                        <h3>Detection Accuracy</h3>
+                        <div class="accuracy-rate">92%</div>
+                        <p>Successful identifications</p>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3>Average Scan Time</h3>
+                        <div class="scan-time">4.2s</div>
+                        <p>Per profile analysis</p>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3>Top Fake Indicators</h3>
+                        <ul class="indicators-list">
+                            <li>Low follower-to-following ratio (78%)</li>
+                            <li>Recent account creation (65%)</li>
+                            <li>Limited personal information (52%)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <h3>Scans Over Time</h3>
+                        <canvas id="scansOverTimeChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>Platform Accuracy</h3>
+                        <canvas id="platformAccuracyChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="charts-row">
+                    <div class="chart-container full-width">
+                        <h3>Detection Patterns</h3>
+                        <canvas id="detectionPatternsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports-section" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>Reports</h1>
+                    <button class="btn btn-primary" id="new-report-btn">
+                        <i class="fas fa-plus"></i> New Report
+                    </button>
+                </div>
+                
+                <div class="reports-tabs">
+                    <button class="report-tab active" data-tab="submitted-reports">Submitted Reports</button>
+                    <button class="report-tab" data-tab="report-templates">Report Templates</button>
+                </div>
+                
+                <div class="report-tab-content active" id="submitted-reports">
+                    <div class="reports-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Report ID</th>
+                                    <th>Platform</th>
+                                    <th>Profile Reported</th>
+                                    <th>Date Submitted</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#RP-10245</td>
+                                    <td><i class="fab fa-instagram"></i> Instagram</td>
+                                    <td>instagram.com/fake_profile_123</td>
+                                    <td>Oct 12, 2025</td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td>
+                                        <button class="icon-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn"><i class="fas fa-download"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#RP-10241</td>
+                                    <td><i class="fab fa-facebook"></i> Facebook</td>
+                                    <td>facebook.com/suspicious_user</td>
+                                    <td>Oct 10, 2025</td>
+                                    <td><span class="status-badge status-resolved">Resolved</span></td>
+                                    <td>
+                                        <button class="icon-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn"><i class="fas fa-download"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>#RP-10238</td>
+                                    <td><i class="fab fa-twitter"></i> Twitter</td>
+                                    <td>twitter.com/fake_account_01</td>
+                                    <td>Oct 5, 2025</td>
+                                    <td><span class="status-badge status-rejected">Rejected</span></td>
+                                    <td>
+                                        <button class="icon-btn"><i class="fas fa-eye"></i></button>
+                                        <button class="icon-btn"><i class="fas fa-download"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="report-tab-content" id="report-templates">
+                    <div class="templates-grid">
+                        <div class="template-card">
+                            <div class="template-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Standard Fake Profile Report</h3>
+                            <p>Comprehensive report for suspected fake profiles with all necessary details.</p>
+                            <button class="btn btn-secondary">Use Template</button>
+                        </div>
+                        
+                        <div class="template-card">
+                            <div class="template-icon">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            <h3>Impersonation Report</h3>
+                            <p>Template for reporting accounts that are impersonating someone else.</p>
+                            <button class="btn btn-secondary">Use Template</button>
+                        </div>
+                        
+                        <div class="template-card">
+                            <div class="template-icon">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                            <h3>Harassment Report</h3>
+                            <p>For reporting profiles engaged in harassment or abusive behavior.</p>
+                            <button class="btn btn-secondary">Use Template</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1>Settings</h1>
+                </div>
+                
+                <div class="settings-tabs">
+                    <button class="settings-tab active" data-tab="account-settings">Account</button>
+                    <button class="settings-tab" data-tab="notification-settings">Notifications</button>
+                    <button class="settings-tab" data-tab="privacy-settings">Privacy</button>
+                </div>
+                
+                <div class="settings-tab-content active" id="account-settings">
+                    <form class="settings-form">
+                        <div class="form-group">
+                            <label for="user-name">Full Name</label>
+                            <input type="text" id="user-name" value="John Doe">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-email">Email Address</label>
+                            <input type="email" id="user-email" value="john.doe@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-company">Company (Optional)</label>
+                            <input type="text" id="user-company" value="Acme Inc.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-role">Role (Optional)</label>
+                            <input type="text" id="user-role" value="Security Analyst">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+                
+                <div class="settings-tab-content" id="notification-settings">
+                    <h3>Notification Preferences</h3>
+                    
+                    <div class="notification-option">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Email notifications for scan results
+                        </label>
+                    </div>
+                    
+                    <div class="notification-option">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Weekly summary reports
+                        </label>
+                    </div>
+                    
+                    <div class="notification-option">
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            Promotional offers and updates
+                        </label>
+                    </div>
+                    
+                    <div class="notification-option">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            Important security alerts
+                        </label>
+                    </div>
+                    
+                    <button class="btn btn-primary">Save Preferences</button>
+                </div>
+                
+                <div class="settings-tab-content" id="privacy-settings">
+                    <h3>Data & Privacy</h3>
+                    
+                    <div class="privacy-option">
+                        <h4>Data Retention</h4>
+                        <p>How long should we keep your scan history?</p>
+                        <select>
+                            <option>30 days</option>
+                            <option selected>90 days</option>
+                            <option>1 year</option>
+                            <option>Indefinitely</option>
+                        </select>
+                    </div>
+                    
+                    <div class="privacy-option">
+                        <h4>Data Sharing</h4>
+                        <p>Allow anonymous usage data to help improve our service</p>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="privacy-option">
+                        <h4>Export Your Data</h4>
+                        <p>Download a copy of all your data from our services</p>
+                        <button class="btn btn-secondary">Request Data Export</button>
+                    </div>
+                    
+                    <div class="privacy-option">
+                        <h4>Delete Account</h4>
+                        <p>Permanently delete your account and all associated data</p>
+                        <button class="btn btn-danger">Delete Account</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/auth.js"></script>
+</body>
+</html>
